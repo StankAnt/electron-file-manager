@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.data-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}

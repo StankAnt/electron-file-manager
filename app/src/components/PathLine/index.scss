@@ -1,0 +1,17 @@
+.path-line {
+  display: flex;
+  flex-direction: row;
+  min-height: 30px;
+  padding: 10px;
+  background-color: #fafafa;
+  border-bottom: 1px solid #ebebeb;
+
+  .navigation {
+    border-right: 1px solid #ebebeb;
+
+    .navigation-arrow {
+      margin-right: 10px;
+      color: grey;
+    }
+  }
+}

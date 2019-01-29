@@ -1,0 +1,48 @@
+.drive-button {
+  width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 10px;
+  padding: 10px;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: #0b7dda;
+    border: none;
+    outline: none;
+  }
+
+  .name {
+    font-size: 1.1rem;
+    margin-left: 10px;
+  }
+
+  .drive-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .capacity-bar {
+    height: 7px;
+    background-color: white;
+    padding: 2px;
+    margin-bottom: 10px;
+
+    .space-used {
+      height: 100%;
+      background-color: #2196f3;
+    }
+  }
+
+  .space-free {
+    display: flex;
+  }
+}
+
+.drive-button_active {
+  background-color: #0b7dda;
+}

@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "app",
+    "sourceMap": true,
+    "jsx": "react",
+    "strict": true,
+    "moduleResolution": "node",
+    "noImplicitThis": false,
+    "allowJs": true,
+    "alwaysStrict": true,
+    "experimentalDecorators": true,
+    "noUnusedLocals": false,
+    "outDir": "dist",
+    "pretty": true,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "es2017"
+    ],
+    "paths": {
+      "types": [
+        "src/types"
+      ]
+    }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+  "compileOnSave": true
+}

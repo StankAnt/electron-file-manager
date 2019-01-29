@@ -1,0 +1,126 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "align": [
+      true,
+      "parameters",
+      "statements",
+      "elements"
+    ],
+    "arrow-return-shorthand": {
+      "severity": "warning"
+    },
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "deprecation": true,
+    "encoding": true,
+    "eofline": {
+      "severity": "warn"
+    },
+    "import-spacing": {
+      "severity": "warning"
+    },
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "no-any": true,
+    "no-boolean-literal-compare": true,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": true,
+    "no-console": true,
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-imports": true,
+    "no-duplicate-super": true,
+    "no-duplicate-switch-case": true,
+    "no-duplicate-variable": true,
+    "no-empty-interface": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-floating-promises": true,
+    "no-inferred-empty-object-type": true,
+    "no-implicit-dependencies": [
+      true,
+      [
+        "app/src/**/*"
+      ]
+    ],
+    "no-invalid-template-strings": true,
+    "no-invalid-this": true,
+    "no-irregular-whitespace": true,
+    "no-return-await": true,
+    "no-shadowed-variable": true,
+    "no-sparse-arrays": true,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-trailing-whitespace": {
+      "severity": "warning"
+    },
+    "no-unbound-method": [
+      true,
+      "ignore-static"
+    ],
+    "no-unnecessary-callback-wrapper": {
+      "severity": "warning"
+    },
+    "no-unnecessary-initializer": true,
+    "no-unsafe-finally": true,
+    "no-unused-expression": [
+      true,
+      "allow-fast-null-checks"
+    ],
+    "no-unused-variable": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "no-var-requires": true,
+    "prefer-conditional-expression": {
+      "severity": "warning"
+    },
+    "prefer-const": true,
+    "prefer-object-spread": {
+      "severity": "warning"
+    },
+    "prefer-readonly": true,
+    "prefer-switch": {
+      "severity": "warning"
+    },
+    "prefer-template": {
+      "severity": "warning"
+    },
+    "restrict-plus-operands": true,
+    "switch-default": true,
+    "switch-final-break": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "triple-equals": true,
+    "use-isnan": true
+  },
+  "rulesDirectory": []
+}

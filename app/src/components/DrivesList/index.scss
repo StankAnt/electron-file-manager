@@ -1,0 +1,30 @@
+.drives-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  background-color: #fafafa;
+  border-right: 1px solid #ebebeb;
+}
+
+.button {
+  display: flex;
+  min-width: 100px;
+  color: white;
+  border: none;
+  background-color: #2196f3;
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+.drive-sort-button {
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3px 10px;
+}
