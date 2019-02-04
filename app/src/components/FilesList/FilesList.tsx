@@ -1,27 +1,43 @@
-import * as React from 'react';
+import React from 'react';
+import ReactTable from 'react-table';
 
-import File from './File/File';
+import 'react-table/react-table.css';
 
-import './index.scss';
-import { FileObject } from 'types';
+import { FileObject } from 'types/objects';
 
 export interface Props {
   files: FileObject[];
 }
 
 export default class FilesList extends React.PureComponent<Props, {}> {
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
   }
 
   public render() {
     const { files } = this.props;
     return (
-      <div className="files-list">
-        {files && files.map(file => (
-          <File name={file.name} ext={file.ext} date={file.date.toUTCString()} />
-        ))}
-      </div>
-    );
+      <ReactTable
+        data={files}
+        columns={[
+          {
+            Header: 'Name',
+            accessor: 'title',
+          },
+          {
+            Header: 'Size',
+            accessor: d => d.isFile ? d.size : '',
+            id: 'sizeColumn',
+            resizable: false,
+            width: 150,
+          },
+          {
+            Header: 'Date',
+            accessor: 'date',
+          },
+        ]}
+        className="-striped -highlight file-list"
+        showPageSizeOptions={false}
+      />);
   }
 }

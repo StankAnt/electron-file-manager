@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Drive from './Drive/Drive';
 
-import { DriveObject } from 'types';
+import { DriveObject } from 'types/objects';
 import './index.scss';
 
 export interface Props {

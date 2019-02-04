@@ -26,11 +26,17 @@
       "es2017"
     ],
     "paths": {
-      "types": [
-        "src/types"
+      "types/*": [
+        "src/types/*"
+      ],
+      "actions/*": [
+        "src/actions/*"
       ]
     }
   },
+  "include": [
+    "app/**/*"
+  ],
   "exclude": [
     "dist",
     "node_modules"

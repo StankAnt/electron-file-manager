@@ -64,7 +64,7 @@
     "no-implicit-dependencies": [
       true,
       [
-        "app/src/**/*"
+        "types"
       ]
     ],
     "no-invalid-template-strings": true,
@@ -74,6 +74,7 @@
     "no-shadowed-variable": true,
     "no-sparse-arrays": true,
     "no-string-throw": true,
+    "no-submodule-imports": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": {
       "severity": "warning"

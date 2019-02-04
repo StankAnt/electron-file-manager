@@ -21,17 +21,15 @@ module.exports = merge.smart(baseConfig, {
   plugins: [new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin()],
   devServer: {
     inline: true,
-    hot: true,
     historyApiFallback: true,
     watchOptions: {
       aggregateTimeout: 300,
       poll: 1000,
-      ignored: /node_modules/
     },
     before() {
       if (process.env.START_HOT) {
         console.log('--> Starting main process');
-        spawn('npm', ['run', 'start-main-dev'], {
+        spawn('yarn', ['start-main-dev'], {
           shell: true,
           env: process.env,
           stdio: 'inherit'
