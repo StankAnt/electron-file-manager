@@ -64,7 +64,9 @@
     "no-implicit-dependencies": [
       true,
       [
-        "types"
+        "types",
+        "store",
+        "api"
       ]
     ],
     "no-invalid-template-strings": true,

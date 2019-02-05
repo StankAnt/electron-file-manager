@@ -1,9 +1,11 @@
 import { ActionCreator } from 'redux';
 import { GetHomePathAction, PathActionTypes, SetHomePathAction } from './types';
 
-export const getHomePath: ActionCreator<GetHomePathAction> = () => ({
-  type: PathActionTypes.GET_HOME_PATH,
-});
+export const getHomePath: ActionCreator<GetHomePathAction> = () => {
+  return {
+    type: PathActionTypes.GET_HOME_PATH,
+  };
+};
 
 export const setHomePath: ActionCreator<SetHomePathAction> = (path: string) => ({
   payload: {

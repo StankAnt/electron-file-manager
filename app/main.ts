@@ -72,7 +72,7 @@ ipcMain.on('DRIVE_INFO_REQUEST', async (event: Event) => {
 });
 
 ipcMain.on('HOME_PATH_REQUEST', (event: Event) => {
-  event.sender.send('HOME_PATH_RESPONSE');
+  event.sender.send('HOME_PATH_RESPONSE', HomePath);
 });
 
 ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {

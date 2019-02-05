@@ -3,7 +3,7 @@
     "module": "es6",
     "target": "es6",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "app",
+    "baseUrl": "./app",
     "sourceMap": true,
     "jsx": "react",
     "strict": true,
@@ -31,11 +31,17 @@
       ],
       "actions/*": [
         "src/actions/*"
-      ]
+      ],
+      "api": [
+        "src/api"
+      ],
+      "store/*": [
+        "src/store/*"
+      ],
     }
   },
   "include": [
-    "app/**/*"
+    "app/**/*",
   ],
   "exclude": [
     "dist",

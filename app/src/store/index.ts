@@ -1,7 +1,7 @@
 import { combineReducers, Reducer } from 'redux';
-import { fork } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 import pathReducer from './path/reducer';
-import pathSaga from './path/saga';
+import { pathSagas } from './path/saga';
 import { PathState } from './path/types';
 
 export interface ApplicationState {
@@ -9,9 +9,9 @@ export interface ApplicationState {
 }
 
 export function* rootSaga() {
-  yield [
-    fork(pathSaga),
-  ];
+  yield all([
+    ...pathSagas,
+  ]);
 }
 
 export const rootReducer: Reducer<ApplicationState> = combineReducers<ApplicationState>({

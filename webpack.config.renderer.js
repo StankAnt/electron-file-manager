@@ -20,7 +20,7 @@ module.exports = merge.smart(baseConfig, {
         exclude: [
           path.resolve(__dirname, 'app', 'main.ts')
         ],
-        loader: 'awesome-typescript-loader'
+        loader: 'ts-loader'
       },
       {
         test: /\.scss$/,
