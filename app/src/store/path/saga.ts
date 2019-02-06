@@ -2,7 +2,7 @@ import * as api from 'api';
 import { Event, IpcRenderer, ipcRenderer } from 'electron';
 import { END, eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
 import { call, put, take, takeEvery } from 'redux-saga/effects';
-import { setHomePath } from './actions';
+import { setPath } from './actions';
 import { PathActionTypes } from './types';
 
 function createGetHomePathChannel(renderer: IpcRenderer) {
@@ -19,7 +19,7 @@ function* onGetHomePathSuccess() {
 
   while (true) {
     const path: string = yield take(channel);
-    yield put(setHomePath(path));
+    yield put(setPath(path));
   }
 }
 

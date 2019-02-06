@@ -8,7 +8,7 @@ const initialState: PathState = {
 
 const reducer: Reducer<PathState, PathActions> = (state: PathState = initialState, action: PathActions) => {
   switch (action.type) {
-    case PathActionTypes.SET_HOME_PATH:
+    case PathActionTypes.SET_PATH:
       return {
         ...state,
         currentPath: action.payload.currentPath,

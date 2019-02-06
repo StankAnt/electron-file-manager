@@ -33,13 +33,16 @@ const getHomePath = (pcPlatform: string): string => {
 const platform: string = getPlatform();
 const homePath: string = getHomePath(platform);
 
-const getDiskInfo = async (pcPlatform: string): Promise<DriveObject[]> => {
+const getDiskInfo = async (pcPlatform: string, pcHomePath: string): Promise<DriveObject[]> => {
   const drivesInfo = await si.fsSize();
+  const isWindows = pcPlatform === 'win32';
+  const isLinux = pcPlatform === 'linux';
+
   return drivesInfo
     .filter(item => {
-      if (pcPlatform === 'linux') {
+      if (isLinux) {
         return item.mount === '/';
-      } else if (pcPlatform === 'win32') {
+      } else if (isWindows) {
         return !!item.type;
       }
       return false;
@@ -47,7 +50,7 @@ const getDiskInfo = async (pcPlatform: string): Promise<DriveObject[]> => {
     .map(item => ({
       available: item.size - item.used,
       capacity: item.use,
-      mount: item.mount,
+      mount: `${item.mount}${isWindows ? pcHomePath : ''}`,
       size: item.size,
     }));
 };
@@ -71,7 +74,9 @@ app.on('ready', async () => {
 });
 
 ipcMain.on('DRIVE_INFO_REQUEST', async (event: Event) => {
-  const drives: DriveObject[] = await getDiskInfo(platform);
+  const drives: DriveObject[] = await getDiskInfo(platform, homePath);
+  console.log(drives);
+
   event.sender.send('DRIVE_INFO_RESPONSE', drives);
 });
 
@@ -82,7 +87,8 @@ ipcMain.on('HOME_PATH_REQUEST', (event: Event) => {
 ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {
   try {
     const files: string[] = await readDir(folderPath);
-
+    console.log(files);
+    console.log(folderPath);
     const stats: FileObject[] = await Promise.all(
       files.map(
         async (file: string): Promise<FileObject> => {
@@ -101,7 +107,9 @@ ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {
     );
 
     event.sender.send('PATH_RESPONSE', stats);
-  } catch {
+  } catch(err) {
+
+    console.log(err);
     event.sender.send('PATH_RESPONSE', []);
   }
 });

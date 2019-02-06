@@ -2,8 +2,8 @@ import { Action } from 'redux';
 
 export enum PathActionTypes {
   GET_HOME_PATH = '@@path/GET_HOME_PATH',
-  SET_HOME_PATH = '@@path/SET_HOME_PATH',
-  SET_HOME_PATH_ERROR = '@@path/SET_HOME_PATH_ERROR',
+  SET_PATH = '@@path/SET_PATH',
+  SET_PATH_ERROR = '@@path/SET_PATH_ERROR',
 }
 
 export interface PathState {
@@ -15,15 +15,15 @@ export interface GetHomePathAction extends Action {
   type: PathActionTypes.GET_HOME_PATH;
 }
 
-export interface SetHomePathAction extends Action {
-  type: PathActionTypes.SET_HOME_PATH;
+export interface SetPathAction extends Action {
+  type: PathActionTypes.SET_PATH;
   payload: {
     currentPath: string,
   };
 }
 
-export interface SetHomePathErrorAction extends Action {
-  type: PathActionTypes.SET_HOME_PATH;
+export interface SetPathErrorAction extends Action {
+  type: PathActionTypes.SET_PATH_ERROR;
   payload: {
     errorMessage: string,
   };
@@ -31,4 +31,4 @@ export interface SetHomePathErrorAction extends Action {
 
 export type PathActions =
   GetHomePathAction |
-  SetHomePathAction;
+  SetPathAction;
