@@ -7,23 +7,36 @@ import DrivesList from './DrivesList/DrivesList';
 import FilesList from './FilesList/FilesList';
 import PathLine from './PathLine/PathLine';
 
+import { GetDriveListAction } from 'store/drives/types';
 import { GetHomePathAction } from 'store/path/types';
 
 export interface Props {
   currentPath: string;
+  drivesList: DriveObject[];
   getHomePath: ActionCreator<GetHomePathAction>;
+  getDrivesList: ActionCreator<GetDriveListAction>;
 }
 
-export default (props: Props) => {
-  props.getHomePath();
+export default class Home extends React.PureComponent<Props, {}>  {
+  constructor(props: Props) {
+    super(props);
+  }
 
-  return (
-    < div className="app-container" >
+  public componentDidMount() {
+    this.props.getHomePath();
+    this.props.getDrivesList();
+  }
+
+  public render() {
+    const { drivesList } = this.props;
+    return (
+    <div className="app-container">
       <PathLine />
       <div className="data-container">
-        <DrivesList drives={[]} />
+        <DrivesList drives={drivesList} />
         <FilesList files={[]} />
       </div>
-    </div >
+    </div>
   );
-};
+    }
+}

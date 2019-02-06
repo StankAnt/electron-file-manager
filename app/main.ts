@@ -18,28 +18,32 @@ const installExtensions = async () => {
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
-  return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload)),
-  );
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
 };
 
-const getHomePath = (): string => {
-  const platform = getPlatform();
+const getHomePath = (pcPlatform: string): string => {
   let homeDir: string = '/';
-
-  if (platform === 'linux') {
+  if (pcPlatform === 'linux') {
     homeDir = homedir();
   }
 
   return homeDir;
 };
 
-const HomePath: string = getHomePath();
+const platform: string = getPlatform();
+const homePath: string = getHomePath(platform);
 
-const getDiskInfo = async (): Promise<DriveObject[]> => {
+const getDiskInfo = async (pcPlatform: string): Promise<DriveObject[]> => {
   const drivesInfo = await si.fsSize();
   return drivesInfo
-    .filter(item => item.mount === '/')
+    .filter(item => {
+      if (pcPlatform === 'linux') {
+        return item.mount === '/';
+      } else if (pcPlatform === 'win32') {
+        return !!item.type;
+      }
+      return false;
+    })
     .map(item => ({
       available: item.size - item.used,
       capacity: item.use,
@@ -67,12 +71,12 @@ app.on('ready', async () => {
 });
 
 ipcMain.on('DRIVE_INFO_REQUEST', async (event: Event) => {
-  const drives: DriveObject[] = await getDiskInfo();
+  const drives: DriveObject[] = await getDiskInfo(platform);
   event.sender.send('DRIVE_INFO_RESPONSE', drives);
 });
 
 ipcMain.on('HOME_PATH_REQUEST', (event: Event) => {
-  event.sender.send('HOME_PATH_RESPONSE', HomePath);
+  event.sender.send('HOME_PATH_RESPONSE', homePath);
 });
 
 ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {
@@ -80,18 +84,21 @@ ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {
     const files: string[] = await readDir(folderPath);
 
     const stats: FileObject[] = await Promise.all(
-      files.map(async (file: string): Promise<FileObject> => {
-        const filePath = path.join(folderPath, file);
-        const stat: Stats = await getStat(filePath);
-        const isFile = stat.isFile();
-        return {
-          date: stat.birthtime,
-          isFile,
-          size: stat.size,
-          title: file,
-          type: isFile && mime.lookup(file),
-        };
-      }));
+      files.map(
+        async (file: string): Promise<FileObject> => {
+          const filePath = path.join(folderPath, file);
+          const stat: Stats = await getStat(filePath);
+          const isFile = stat.isFile();
+          return {
+            date: stat.birthtime,
+            isFile,
+            size: stat.size,
+            title: file,
+            type: isFile && mime.lookup(file),
+          };
+        },
+      ),
+    );
 
     event.sender.send('PATH_RESPONSE', stats);
   } catch {
