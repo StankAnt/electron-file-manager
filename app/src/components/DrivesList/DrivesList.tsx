@@ -14,7 +14,6 @@ export interface Props {
 
 const DrivesInfo = (props: Props) => {
   const { drives } = props;
-  console.log(drives);
   return (
     <div className="drives-info">
       <button className="button drive-sort-button">

@@ -3,26 +3,26 @@ import { DriveObject } from 'types/objects';
 
 export enum DrivesActionTypes {
   GET_DRIVES_LIST = '@@drives/GET_DRIVES_LIST',
-  SET_DRIVES_LIST = '@@path/SET_DRIVES_LIST',
-  SET_DRIVES_LIST_ERROR = '@@path/SET_DRIVES_LIST_ERROR',
+  SET_DRIVES_LIST = '@@drives/SET_DRIVES_LIST',
+  SET_DRIVES_LIST_ERROR = '@@drives/SET_DRIVES_LIST_ERROR',
 }
 
 export interface DrivesState {
   drivesList: DriveObject[];
 }
 
-export interface GetDriveListAction extends Action {
+export interface GetDrivesListAction extends Action {
   type: DrivesActionTypes.GET_DRIVES_LIST;
 }
 
-export interface SetDriveListAction extends Action {
+export interface SetDrivesListAction extends Action {
   type: DrivesActionTypes.SET_DRIVES_LIST;
   payload: {
     drivesList: DriveObject[],
   };
 }
 
-export interface SetDriveListErrorAction extends Action {
+export interface SetDrivesListErrorAction extends Action {
   type: DrivesActionTypes.SET_DRIVES_LIST_ERROR;
   payload: {
     errorMessage: string,
@@ -30,5 +30,5 @@ export interface SetDriveListErrorAction extends Action {
 }
 
 export type DrivesActions =
-  GetDriveListAction |
-  SetDriveListAction;
+  GetDrivesListAction |
+  SetDrivesListAction;

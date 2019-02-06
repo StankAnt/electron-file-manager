@@ -5,7 +5,7 @@ const initialState: DrivesState = {
   drivesList: [],
 };
 
-const reducer: Reducer<DrivesState> = (state: DrivesState = initialState, action: DrivesActions) => {
+const reducer: Reducer<DrivesState, DrivesActions> = (state: DrivesState = initialState, action: DrivesActions) => {
   switch (action.type) {
     case DrivesActionTypes.SET_DRIVES_LIST:
       return {

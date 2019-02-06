@@ -1,4 +1,3 @@
-import { Event, ipcRenderer } from 'electron';
 import * as React from 'react';
 import { ActionCreator } from 'redux';
 
@@ -7,14 +6,17 @@ import DrivesList from './DrivesList/DrivesList';
 import FilesList from './FilesList/FilesList';
 import PathLine from './PathLine/PathLine';
 
-import { GetDriveListAction } from 'store/drives/types';
+import { GetDrivesListAction } from 'store/drives/types';
+import { GetFilesListAction } from 'store/files/types';
 import { GetHomePathAction } from 'store/path/types';
 
 export interface Props {
   currentPath: string;
   drivesList: DriveObject[];
+  filesList: FileObject[];
   getHomePath: ActionCreator<GetHomePathAction>;
-  getDrivesList: ActionCreator<GetDriveListAction>;
+  getDrivesList: ActionCreator<GetDrivesListAction>;
+  getFilesList: ActionCreator<GetFilesListAction>;
 }
 
 export default class Home extends React.PureComponent<Props, {}>  {
@@ -28,15 +30,15 @@ export default class Home extends React.PureComponent<Props, {}>  {
   }
 
   public render() {
-    const { drivesList } = this.props;
+    const { drivesList, filesList, currentPath, getFilesList } = this.props;
     return (
-    <div className="app-container">
-      <PathLine />
-      <div className="data-container">
-        <DrivesList drives={drivesList} />
-        <FilesList files={[]} />
+      <div className="app-container">
+        <PathLine />
+        <div className="data-container">
+          <DrivesList drives={drivesList} />
+          <FilesList files={filesList} currentPath={currentPath} getFilesList={getFilesList}  />
+        </div>
       </div>
-    </div>
-  );
-    }
+    );
+  }
 }

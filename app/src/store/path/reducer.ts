@@ -6,7 +6,7 @@ const initialState: PathState = {
   pathArray: [],
 };
 
-const reducer: Reducer<PathState> = (state: PathState = initialState, action: PathActions) => {
+const reducer: Reducer<PathState, PathActions> = (state: PathState = initialState, action: PathActions) => {
   switch (action.type) {
     case PathActionTypes.SET_HOME_PATH:
       return {
