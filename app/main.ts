@@ -96,8 +96,6 @@ app.on('ready', async () => {
 
 ipcMain.on('DRIVE_INFO_REQUEST', async (event: Event) => {
   const drives: DriveObject[] = await getDiskInfo(platform, homePath);
-  console.log(drives);
-
   event.sender.send('DRIVE_INFO_RESPONSE', drives);
 });
 
@@ -131,6 +129,7 @@ ipcMain.on('OPEN_FILE_REQUEST', async (event: Event, filePath: string, fileName:
     const isSuccessful = shell.openItem(fullPath);
     event.sender.send('OPEN_FILE_RESPONSE', { success: isSuccessful });
   } catch (err) {
+    console.log(err);
     event.sender.send('OPEN_FILE_RESPONSE', { success: false });
   }
 });

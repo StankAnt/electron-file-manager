@@ -1,6 +1,6 @@
 import { ActionCreator } from 'redux';
 import { FileObject } from 'types/objects';
-import { FilesActionTypes, GetFilesListAction, SetFilesListAction } from './types';
+import { FilesActionTypes, GetFilesListAction, OpenFileAction, SetFilesListAction } from './types';
 
 export const getFilesList: ActionCreator<GetFilesListAction> = (path: string) => {
   return {
@@ -17,3 +17,13 @@ export const setFilesList: ActionCreator<SetFilesListAction> = (files: FileObjec
   },
   type: FilesActionTypes.SET_FILES_LIST,
 });
+
+export const openFile: ActionCreator<OpenFileAction> = (path: string, fileName: string) => {
+  return {
+    payload: {
+      fileName,
+      path,
+    },
+    type: FilesActionTypes.OPEN_FILE,
+  };
+};

@@ -5,6 +5,8 @@ export enum FilesActionTypes {
   GET_FILES_LIST = '@@files/GET_FILES_LIST',
   SET_FILES_LIST = '@@files/SET_FILES_LIST',
   SET_FILES_LIST_ERROR = '@@files/SET_FILES_LIST_ERROR',
+  OPEN_FILE = '@@files/OPEN_FILE',
+  OPEN_FILE_ERROR = '@@files/OPEN_FILE_ERROR',
 }
 
 export interface FilesState {
@@ -32,6 +34,15 @@ export interface SetFilesListErrorAction extends Action {
   };
 }
 
+export interface OpenFileAction extends Action {
+  type: FilesActionTypes.OPEN_FILE;
+  payload: {
+    path: string;
+    fileName: string;
+  };
+}
+
 export type FilesActions =
   GetFilesListAction |
-  SetFilesListAction;
+  SetFilesListAction |
+  OpenFileAction;

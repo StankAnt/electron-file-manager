@@ -1,6 +1,6 @@
 import * as api from 'api';
 import { Event, ipcRenderer } from 'electron';
-import { eventChannel } from 'redux-saga';
+import { END, eventChannel } from 'redux-saga';
 import { call, put, take, takeEvery } from 'redux-saga/effects';
 import { DriveObject } from 'types/objects';
 import { setDrivesList } from './actions';
@@ -10,6 +10,7 @@ function createGetDrivesListChannel() {
   return eventChannel((emit) => {
     const handler = (event: Event, drives: DriveObject[]) => {
       emit(drives);
+      emit(END);
     };
     ipcRenderer.on('DRIVE_INFO_RESPONSE', handler);
     return () => ipcRenderer.removeListener('DRIVE_INFO_RESPONSE', handler);

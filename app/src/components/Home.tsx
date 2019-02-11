@@ -7,7 +7,7 @@ import FilesList from './FilesList/FilesList';
 import PathLine from './PathLine/PathLine';
 
 import { GetDrivesListAction } from 'store/drives/types';
-import { GetFilesListAction } from 'store/files/types';
+import { GetFilesListAction, OpenFileAction } from 'store/files/types';
 import { GetHomePathAction, SetPathAction } from 'store/path/types';
 
 export interface Props {
@@ -18,6 +18,7 @@ export interface Props {
   getDrivesList: ActionCreator<GetDrivesListAction>;
   getFilesList: ActionCreator<GetFilesListAction>;
   setPath: ActionCreator<SetPathAction>;
+  openFile: ActionCreator<OpenFileAction>;
 }
 
 export default class Home extends React.PureComponent<Props, {}>  {
@@ -31,14 +32,20 @@ export default class Home extends React.PureComponent<Props, {}>  {
   }
 
   public render() {
-    const { drivesList, filesList, currentPath, getFilesList, setPath } = this.props;
+    const { drivesList, filesList, currentPath, getFilesList, setPath, openFile } = this.props;
     console.log(this.props);
     return (
       <div className="app-container">
         <PathLine />
         <div className="data-container">
           <DrivesList drives={drivesList} setPath={setPath} />
-          <FilesList files={filesList} currentPath={currentPath} getFilesList={getFilesList}  />
+          <FilesList
+            files={filesList}
+            currentPath={currentPath}
+            getFilesList={getFilesList}
+            setPath={setPath}
+            openFile={openFile}
+          />
         </div>
       </div>
     );

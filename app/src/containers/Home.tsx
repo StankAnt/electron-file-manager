@@ -6,7 +6,7 @@ import Home from '../components/Home';
 import * as drivesActions from 'store/drives/actions';
 import { GetDrivesListAction } from 'store/drives/types';
 import * as filesActions from 'store/files/actions';
-import { GetFilesListAction } from 'store/files/types';
+import { GetFilesListAction, OpenFileAction } from 'store/files/types';
 import { ApplicationState } from 'store/index';
 import * as pathActions from 'store/path/actions';
 import { GetHomePathAction, SetPathAction } from 'store/path/types';
@@ -22,6 +22,7 @@ interface DispatchToProps {
   getHomePath: ActionCreator<GetHomePathAction>;
   getDrivesList: ActionCreator<GetDrivesListAction>;
   getFilesList: ActionCreator<GetFilesListAction>;
+  openFile: ActionCreator<OpenFileAction>;
   setPath: ActionCreator<SetPathAction>;
 }
 
@@ -35,6 +36,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchToProps => bindActionCr
   getDrivesList: drivesActions.getDrivesList,
   getFilesList: filesActions.getFilesList,
   getHomePath: pathActions.getHomePath,
+  openFile: filesActions.openFile,
   setPath: pathActions.setPath,
 }, dispatch);
 
