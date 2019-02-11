@@ -55,6 +55,27 @@ const getDiskInfo = async (pcPlatform: string, pcHomePath: string): Promise<Driv
     }));
 };
 
+const getFilesInfo = (folderPath: string, files: string[]) => {
+  return files.map(
+    async (file: string): Promise<FileObject | null> => {
+      try {
+        const filePath = path.join(folderPath, file);
+        const stat: Stats = await getStat(filePath);
+        const isFile = stat.isFile();
+        return {
+          date: stat.birthtime,
+          isFile,
+          size: stat.size,
+          title: file,
+          type: isFile && mime.lookup(file),
+        };
+      } catch {
+        return null;
+      }
+    },
+  );
+};
+
 app.on('ready', async () => {
   mainWindow = new BrowserWindow({ minWidth: 1024, minHeight: 768 });
 
@@ -87,29 +108,12 @@ ipcMain.on('HOME_PATH_REQUEST', (event: Event) => {
 ipcMain.on('PATH_REQUEST', async (event: Event, folderPath: string) => {
   try {
     const files: string[] = await readDir(folderPath);
-    console.log(files);
-    console.log(folderPath);
-    const stats: FileObject[] = await Promise.all(
-      files.map(
-        async (file: string): Promise<FileObject> => {
-          const filePath = path.join(folderPath, file);
-          const stat: Stats = await getStat(filePath);
-          const isFile = stat.isFile();
-          return {
-            date: stat.birthtime,
-            isFile,
-            size: stat.size,
-            title: file,
-            type: isFile && mime.lookup(file),
-          };
-        },
-      ),
-    );
+    const stats: FileObject[] =
+      (await Promise.all(getFilesInfo(folderPath, files)))
+        .filter(file => !!file) as FileObject[];
 
     event.sender.send('PATH_RESPONSE', stats);
-  } catch(err) {
-
-    console.log(err);
+  } catch (err) {
     event.sender.send('PATH_RESPONSE', []);
   }
 });

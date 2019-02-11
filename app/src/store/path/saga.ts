@@ -1,21 +1,22 @@
 import * as api from 'api';
-import { Event, IpcRenderer, ipcRenderer } from 'electron';
-import { END, eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
+import { Event, ipcRenderer } from 'electron';
+import { eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
 import { call, put, take, takeEvery } from 'redux-saga/effects';
 import { setPath } from './actions';
 import { PathActionTypes } from './types';
 
-function createGetHomePathChannel(renderer: IpcRenderer) {
+function createGetHomePathChannel() {
   return eventChannel((emit): Unsubscribe => {
-    renderer.on('HOME_PATH_RESPONSE', (event: Event, path: string) => {
+    const handler = (event: Event, path: string) => {
       emit(path);
-    });
-    return () => emit(END);
+    };
+    ipcRenderer.on('HOME_PATH_RESPONSE', handler);
+    return () => ipcRenderer.removeListener('HOME_PATH_RESPONSE', handler);
   });
 }
 
 function* onGetHomePathSuccess() {
-  const channel: EventChannel<{}> = yield call(createGetHomePathChannel, ipcRenderer);
+  const channel: EventChannel<{}> = yield call(createGetHomePathChannel);
 
   while (true) {
     const path: string = yield take(channel);

@@ -1,22 +1,23 @@
 import * as api from 'api';
-import { Event, IpcRenderer, ipcRenderer } from 'electron';
-import { END, eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
+import { Event, ipcRenderer } from 'electron';
+import { eventChannel } from 'redux-saga';
 import { call, put, take, takeEvery } from 'redux-saga/effects';
 import { DriveObject } from 'types/objects';
 import { setDrivesList } from './actions';
 import { DrivesActionTypes } from './types';
 
-function createGetDrivesListChannel(renderer: IpcRenderer) {
-  return eventChannel((emit): Unsubscribe => {
-    renderer.on('DRIVE_INFO_RESPONSE', (event: Event, drives: DriveObject[]) => {
+function createGetDrivesListChannel() {
+  return eventChannel((emit) => {
+    const handler = (event: Event, drives: DriveObject[]) => {
       emit(drives);
-    });
-    return () => emit(END);
+    };
+    ipcRenderer.on('DRIVE_INFO_RESPONSE', handler);
+    return () => ipcRenderer.removeListener('DRIVE_INFO_RESPONSE', handler);
   });
 }
 
 function* onGetDrivesListSuccess() {
-  const channel: EventChannel<{}> = yield call(createGetDrivesListChannel, ipcRenderer);
+  const channel = yield call(createGetDrivesListChannel);
 
   while (true) {
     const drives: DriveObject[] = yield take(channel);

@@ -1,22 +1,23 @@
 import * as api from 'api';
-import { Event, IpcRenderer, ipcRenderer } from 'electron';
-import { END, eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
+import { Event, ipcRenderer } from 'electron';
+import { eventChannel, EventChannel, Unsubscribe } from 'redux-saga';
 import { call, put, take, takeEvery } from 'redux-saga/effects';
 import { FileObject } from 'types/objects';
 import { setFilesList } from './actions';
 import { FilesActionTypes, GetFilesListAction } from './types';
 
-function createGetFilesListChannel(renderer: IpcRenderer) {
+function createGetFilesListChannel() {
   return eventChannel((emit): Unsubscribe => {
-    renderer.on('PATH_RESPONSE', (event: Event, files: FileObject[]) => {
+    const handler = (event: Event, files: FileObject[]) => {
       emit(files);
-    });
-    return () => emit(END);
+    };
+    ipcRenderer.on('PATH_RESPONSE', handler);
+    return () => ipcRenderer.removeListener('PATH_RESPONSE', handler);
   });
 }
 
 function* onGetFilesListSuccess() {
-  const channel: EventChannel<{}> = yield call(createGetFilesListChannel, ipcRenderer);
+  const channel: EventChannel<{}> = yield call(createGetFilesListChannel);
 
   while (true) {
     const files: FileObject[] = yield take(channel);
